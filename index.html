@@ -7,8 +7,14 @@ function getPlayerChoice() {
     return prompt("Type rock paper or scissors").toLowerCase();
 }
 
+
 //  Create getComputerChoice function to make computer
 //      randomly choose rock, paper or scissors 
+
+function getComputerChoice() {
+    const options = ['rock', 'scissors', 'paper']
+    return options[Math.floor(Math.random()*3)];
+}
 
 //  Create  playRound(playerSelection, computerSelection) function
 //      that plays one round against computer 
