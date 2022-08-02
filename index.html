@@ -18,32 +18,39 @@ function getComputerChoice() {
 //      that plays one round against computer 
 
 function playRound(playerSelection, computerSelection) {
-    if (drawCheck(playerSelection,computerSelection)) {
-        return "Its a draw! You both chose " + playerSelection;
-    } else if ( playerSelection == 'rock' && computerSelection == 'scissors' || 
-                playerSelection == 'scissors' && computerSelection == 'paper'||
-                playerSelection == 'paper' && computerSelection == 'rock'
-    ) {
-        return getMessage(playerSelection, computerSelection);
+    let message = "";
+    if (playerSelection == computerSelection) {
+        message = "Its a draw! You both chose " + capitalize(playerSelection);
     } else {
-        return getMessage(playerSelection, computerSelection, false);
+        message = didPlayerWon(playerSelection,computerSelection) ? getMessage(playerSelection, computerSelection)
+        : getMessage(playerSelection, computerSelection, false);
     }
-}
-
-
-
-//Create  drawCheck(), getMessage function
-
-function drawCheck(player, computer) {
-    return player == computer;
-}
-
-function getMessage(player, computer, win = true) {
-    console.log(player, computer);
-    let message = win ? "You win! " + player + " beats " + computer
-    : "You lose! " + computer + " beats " + player;
     return message;
 }
 
 //  Create game() function that plays 5 rounds, keeps scores and returns a winner 
+
+
+//Create getMessage() and didPlayerWon() function
+
+
+function getMessage(player, computer, win = true) {
+    let message = win ? "You win! " + capitalize(player) + " beats " + capitalize(computer)
+    : "You lose! " + capitalize(computer) + " beats " + capitalize(player);
+    return message;
+}
+
+function didPlayerWon(player,computer) {
+    return player == 'rock' && computer == 'scissors' ||
+           player == 'scissors' && computer == 'paper' ||
+           player == 'paper' && computer == 'rock';
+}
+
+function capitalize(s)
+{
+    return s[0].toUpperCase() + s.slice(1);
+}
+
+
+
 </script>
