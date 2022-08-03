@@ -18,39 +18,69 @@ function getComputerChoice() {
 //      that plays one round against computer 
 
 function playRound(playerSelection, computerSelection) {
-    let message = "";
-    if (playerSelection == computerSelection) {
-        message = "Its a draw! You both chose " + capitalize(playerSelection);
+    var gameResult = "";
+    var pSelect = capitalize(playerSelection);
+    var cSelect = capitalize(computerSelection);
+    if (isItDraw(pSelect, cSelect)) {
+        gameResult = "Its a draw! You both chose " + pSelect;
     } else {
-        message = didPlayerWon(playerSelection,computerSelection) ? getMessage(playerSelection, computerSelection)
-        : getMessage(playerSelection, computerSelection, false);
+        gameResult = didPlayerWon(pSelect,cSelect) ? getRoundMessage(pSelect, cSelect)
+        : getRoundMessage(pSelect, cSelect, false);
     }
-    return message;
+    console.log(gameResult);
+    return gameResult;
 }
 
 //  Create game() function that plays 5 rounds, keeps scores and returns a winner 
 
+function game() {
+    var playerScore = 0;
+    var computerScore = 0;
+    for (let i = 0; i < 5; i++) {
+        let playerPick = capitalize(getPlayerChoice());
+        let computerPick = capitalize(getComputerChoice());
+        playRound(playerPick, computerPick);
+        if (!isItDraw(playerPick,computerPick)) {
+            didPlayerWon(playerPick,computerPick) ? playerScore ++ : computerScore ++;
+        }
+    }
+    showFinalMessage(playerScore, computerScore);
+}
 
-//Create getMessage() and didPlayerWon() function
+//Create getRoundMessage() and didPlayerWon() function
 
 
-function getMessage(player, computer, win = true) {
-    let message = win ? "You win! " + capitalize(player) + " beats " + capitalize(computer)
-    : "You lose! " + capitalize(computer) + " beats " + capitalize(player);
+function getRoundMessage(player, computer, win = true) {
+    let message = win ? "You win! " + player + " beats " + computer
+    : "You lose! " + computer + " beats " + player;
     return message;
 }
 
+function isItDraw(player, computer) {
+    return player == computer;
+}
+
 function didPlayerWon(player,computer) {
-    return player == 'rock' && computer == 'scissors' ||
-           player == 'scissors' && computer == 'paper' ||
-           player == 'paper' && computer == 'rock';
+    return player == 'Rock' && computer == 'Scissors' ||
+           player == 'Scissors' && computer == 'Paper' ||
+           player == 'Paper' && computer == 'Rock';
 }
 
-function capitalize(s)
-{
-    return s[0].toUpperCase() + s.slice(1);
+function showFinalMessage(pScore, cScore) {
+    if (pScore == cScore) {
+        console.log("Its a Draw! Final score is " + pScore + " : " + cScore);
+        return "Draw";
+    } else if (pScore > cScore) {
+        console.log("You won! Final score is " + pScore + " : " + cScore);
+        return "Player";
+    } else {
+        console.log("You lost! Final score is " + pScore + " : " + cScore);
+        return "Computer";
+    }
 }
 
-
+function capitalize(s) {
+    return s.charAt(0).toUpperCase() + s.slice(1);
+}
 
 </script>
